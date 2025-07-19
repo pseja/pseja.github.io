@@ -1,9 +1,11 @@
 import { randomBetween } from "./utils.js";
+import { Polygon, Star } from "./shapes.js";
 
 export class Node {
-    minSize = 1;
-    maxSize = 5;
+    minSize = 4;
+    maxSize = 6;
     rotationMultiplier = this.maxSize * 0.1;
+    shapes = [Polygon, Star];
 
     constructor(ctx) {
         this.ctx = ctx;
@@ -15,7 +17,12 @@ export class Node {
         this.rotation = 0;
         this.rotationSpeed =
             Math.sqrt(this.vx ** 2 + this.vy ** 2) *
-            (this.rotationMultiplier / this.radius);
+            (this.rotationMultiplier / this.radius) *
+            (Math.random() < 0.5 ? 1 : -1);
+
+        const ShapeClass =
+            this.shapes[Math.floor(Math.random() * this.shapes.length)];
+        this.shape = new ShapeClass();
     }
 
     draw() {
@@ -23,16 +30,8 @@ export class Node {
         this.ctx.translate(this.x, this.y);
         this.ctx.rotate(this.rotation);
 
-        // this.ctx.beginPath();
-        // this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = "#888";
-        this.ctx.fillRect(
-            -this.radius,
-            -this.radius,
-            this.radius * 2,
-            this.radius * 2
-        );
-        // this.ctx.fill();
+        this.ctx.fillStyle = "#444";
+        this.shape.draw(this.ctx, this.radius);
 
         this.ctx.restore();
     }
