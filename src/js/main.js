@@ -1,4 +1,5 @@
 import { Node } from "./Node.js";
+import { ColorController } from "./ColorController.js";
 
 const canvas = document.getElementById("graph");
 const ctx = canvas.getContext("2d");
@@ -19,14 +20,17 @@ document.addEventListener("mousemove", (e) => {
 const nodes = [];
 const nodeCount = 100;
 const maxConnectionDistance = 150;
+const colorController = new ColorController();
 
 function init() {
     for (let i = 0; i < nodeCount; i++) {
-        nodes.push(new Node(ctx));
+        nodes.push(new Node(ctx, colorController));
     }
 }
 
 function drawConnections() {
+    const colors = colorController.getCurrentColors();
+
     for (let i = 0; i < nodes.length; i++) {
         // mouse connections
         const mDx = nodes[i].x - mouse.x;
@@ -36,8 +40,11 @@ function drawConnections() {
         if (mDistance < maxConnectionDistance) {
             const mOpacity = 1 - mDistance / maxConnectionDistance;
 
-            ctx.strokeStyle = `rgba(203, 166, 247, ${mOpacity})`;
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = colors.secondary.replace(
+                ")",
+                ` / ${mOpacity * 0.8})`
+            );
+            ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(mouse.x, mouse.y);
@@ -53,7 +60,10 @@ function drawConnections() {
             if (distance < maxConnectionDistance) {
                 const opacity = 1 - distance / maxConnectionDistance;
 
-                ctx.strokeStyle = `rgba(68, 68, 68, ${opacity})`;
+                ctx.strokeStyle = colors.primary.replace(
+                    ")",
+                    ` / ${opacity * 0.3})`
+                );
                 ctx.lineWidth = 1;
                 ctx.beginPath();
                 ctx.moveTo(nodes[i].x, nodes[i].y);

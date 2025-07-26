@@ -7,8 +7,9 @@ export class Node {
     rotationMultiplier = this.maxSize * 0.1;
     shapes = [Polygon, Star];
 
-    constructor(ctx) {
+    constructor(ctx, colorController) {
         this.ctx = ctx;
+        this.colorController = colorController;
         this.x = Math.random() * window.innerWidth;
         this.y = Math.random() * window.innerHeight;
         this.vx = (Math.random() - 0.5) * 0.5;
@@ -23,6 +24,8 @@ export class Node {
         const ShapeClass =
             this.shapes[Math.floor(Math.random() * this.shapes.length)];
         this.shape = new ShapeClass();
+
+        this.color = Math.random();
     }
 
     draw() {
@@ -30,7 +33,18 @@ export class Node {
         this.ctx.translate(this.x, this.y);
         this.ctx.rotate(this.rotation);
 
-        this.ctx.fillStyle = "#444";
+        const colors = this.colorController.getCurrentColors();
+
+        if (this.color < 0.3) {
+            this.ctx.fillStyle = colors.primary;
+        } else if (this.color < 0.6) {
+            this.ctx.fillStyle = colors.secondary;
+        } else if (this.color < 0.8) {
+            this.ctx.fillStyle = colors.border;
+        } else {
+            this.ctx.fillStyle = colors.highlight;
+        }
+
         this.shape.draw(this.ctx, this.radius);
 
         this.ctx.restore();

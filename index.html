@@ -12,6 +12,25 @@
   <canvas id="graph"></canvas>
   <div class="content">
     <h1>LUKÁŠ PŠEJA</h1>
+
+    <div class="color-controls">
+      <div class="control-group">
+        <label for="hue-slider">Hue</label>
+        <div class="slider-container">
+          <div class="slider-track hue-track"></div>
+          <input type="range" id="hue-slider" min="0" max="360" value="300" />
+        </div>
+        <span id="hue-value">300</span>
+      </div>
+      <div class="control-group">
+        <label for="chroma-slider">Chroma</label>
+        <div class="slider-container">
+          <div class="slider-track chroma-track"></div>
+          <input type="range" id="chroma-slider" min="0" max="0.36" step="0.01" value="0.1" />
+        </div>
+        <span id="chroma-value">.10</span>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="src/js/main.js"></script>
