@@ -185,6 +185,7 @@ body {
     border: 1px solid var(--border-muted);
     border-radius: 6px;
     padding: 0.25rem 0.5rem;
+    min-width: 42px;
     font-family: monospace;
     font-size: 0.85rem;
     text-align: right;
