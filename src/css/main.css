@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html,
@@ -20,4 +21,8 @@ body {
 
 .content h1 {
     font-size: 64px;
+}
+
+#graph {
+    position: fixed;
 }

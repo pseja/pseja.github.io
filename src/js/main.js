@@ -10,8 +10,8 @@ window.addEventListener("resize", () => {
     height = canvas.height = window.innerHeight;
 });
 
-let mouse = { x: 0, y: 0 };
-canvas.addEventListener("mousemove", (e) => {
+let mouse = { x: -1000, y: -1000 };
+document.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
 });
